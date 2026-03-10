@@ -1,10 +1,44 @@
-image: node:20
+name: Typescript CI
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^lab.*/
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 stages:
+  - install
   - test
+  - build
 
-vitest:
-  stage: test
+cache:
+  paths:
+    - node_modules/
+
+install:
+  stage: install
+  image: node:18-alpine
   script:
-    - npm install
-    - npm run test
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+
+test:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm test
+  needs:
+    - install
+
+build:
+  stage: build
+  image: node:18-alpine
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+  needs:
+    - install
+    - test
