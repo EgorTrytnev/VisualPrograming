@@ -1,31 +1,34 @@
-export function csvToJSON(input: string[], delimiter: string) : object[] {
-    if(!input || input.length < 2) {
+export function csvToJSON(csvLines: string[], separator: string): Record<string, string | number>[] {
+    if (!csvLines?.length || csvLines.length < 2) {
         throw new Error("Некорректная передача");
     }
 
-    const result: object[] = [];
+    const parsedData: Record<string, string | number>[] = [];
 
-    const header = input[0].split(delimiter);
+    const headers = csvLines[0].split(separator);
 
-    for(let i = 1; i < input.length; i++) {
-        const values = input[i].split(delimiter);
+    for (let lineIndex = 1; lineIndex < csvLines.length; lineIndex++) {
+        const values = csvLines[lineIndex].split(separator);
 
-        if(header.length !== values.length) {
+        if (headers.length !== values.length) {
             throw new Error("Несовпадение по количеству параметров");
         }
 
-        const obj: { [key: string]: string | number } = {};
-        
-        for (let j = 0; j < header.length; j++) {
-            if(values[j] === "") {
-                throw new Error("Передача пустого значени"); 
+        const rowObject: Record<string, string | number> = {};
+
+        for (let columnIndex = 0; columnIndex < headers.length; columnIndex++) {
+            const currentValue = values[columnIndex];
+
+            if (currentValue === "") {
+                throw new Error("Передача пустого значения");
             }
-            
-            obj[header[j]] = isNaN(Number(values[j])) ? values[j] : Number(values[j]);
+
+            const parsedValue = isNaN(Number(currentValue)) ? currentValue : Number(currentValue);
+            rowObject[headers[columnIndex]] = parsedValue;
         }
 
-        result.push(obj);
+        parsedData.push(rowObject);
     }
 
-    return result;
+    return parsedData;
 }

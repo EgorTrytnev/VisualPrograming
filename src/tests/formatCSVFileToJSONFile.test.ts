@@ -7,54 +7,57 @@ vi.mock('node:fs/promises', () => ({
     writeFile: vi.fn()
 }));
 
-const fakeReadFile = vi.mocked(readFile);
-const fakeWriteFile = vi.mocked(writeFile);
+const mockedReadFile = vi.mocked(readFile);
+const mockedWriteFile = vi.mocked(writeFile);
 
-describe('formatCSVFileToJSONFile function', () => {
+describe('formatCSVFileToJSONFile', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.resetAllMocks();
     });
 
-    it('Корректный ввод и вывод', async () => {
-        fakeReadFile.mockResolvedValue("p1;p2\n1;A\n2;B");
-        await formatCSVFileToJSONFile('./in.csv', './out.json', ';');
+    it('successfully converts CSV to JSON', async () => {
+        mockedReadFile.mockResolvedValue("header1;header2\nvalue1;A\nvalue2;B");
+        await formatCSVFileToJSONFile('input.csv', 'output.json', ';');
 
-        expect(fakeReadFile).toHaveBeenCalledWith('./in.csv', 'utf-8');
-        expect(fakeWriteFile).toHaveBeenCalledWith(
-            './out.json',
+        expect(mockedReadFile).toHaveBeenCalledTimes(1);
+        expect(mockedReadFile).toHaveBeenCalledWith('input.csv', 'utf-8');
+        expect(mockedWriteFile).toHaveBeenCalledTimes(1);
+        expect(mockedWriteFile).toHaveBeenCalledWith(
+            'output.json',
             JSON.stringify([
-                { p1: 1, p2: 'A'},
-                { p1: 2, p2: 'B'}
+                { header1: 'value1', header2: 'A' },
+                { header1: 'value2', header2: 'B' }
             ], null, 2)
         );
     });
 
-    it('Передача некорректных параметров', async () => {
-        await expect(() => formatCSVFileToJSONFile('', './out.json', ';')).rejects.
-            toThrowError("Error: Необходимо указать корректный путь");
+    it('throws error for empty file paths', async () => {
+        await expect(formatCSVFileToJSONFile('', 'output.json', ';'))
+            .rejects.toThrow("Error: Необходимо указать корректный путь");
 
-        await expect(() => formatCSVFileToJSONFile('./in.csv', '', ';')).rejects.
-            toThrowError("Error: Необходимо указать корректный путь");
+        await expect(formatCSVFileToJSONFile('input.csv', '', ';'))
+            .rejects.toThrow("Error: Необходимо указать корректный путь");
     });
 
-    it('Входной файл не найден', async () => {
-        fakeReadFile.mockRejectedValue(new Error('ENOENT'));
+    it('handles missing input file', async () => {
+        mockedReadFile.mockRejectedValue(new Error('ENOENT'));
 
-        await expect(() => formatCSVFileToJSONFile('./in.csv', './out.json', ';')).rejects.
-            toThrowError("Ошибка чтения файла: ./in.csv");
+        await expect(formatCSVFileToJSONFile('input.csv', 'output.json', ';'))
+            .rejects.toThrow("Ошибка чтения файла: input.csv");
     });
 
-    it('Пустой csv файл', async () => {
-        fakeReadFile.mockResolvedValue('');
-        await expect(formatCSVFileToJSONFile('./in.csv', './out.json', ';')).rejects.
-            toThrowError('Error: Некорректная передача параметра input!');
+    it('handles empty CSV file', async () => {
+        mockedReadFile.mockResolvedValue('');
+
+        await expect(formatCSVFileToJSONFile('input.csv', 'output.json', ';'))
+            .rejects.toThrow('Error: Некорректная передача параметра input!');
     });
 
-    it('Ошибка записи в файл', async () => {
-        fakeReadFile.mockResolvedValue("p1;p2\n1;A\n2;B");
-        fakeWriteFile.mockRejectedValue(new Error('EACCES'));
-        
-        await expect(formatCSVFileToJSONFile('./in.csv', './out.json', ';')).rejects.
-            toThrowError('Ошибка записи в файл: ./out.json');
+    it('handles file write error', async () => {
+        mockedReadFile.mockResolvedValue("header1;header2\nvalue1;A");
+        mockedWriteFile.mockRejectedValue(new Error('EACCES'));
+
+        await expect(formatCSVFileToJSONFile('input.csv', 'output.json', ';'))
+            .rejects.toThrow('Ошибка записи в файл: output.json');
     });
 });
