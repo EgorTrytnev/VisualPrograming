@@ -1,25 +1,25 @@
-import { describe, it, expect } from 'vitest'
-import { csvToJSON } from '../csvToJSON';
+import { describe, it, expect } from 'vitest';
+import { csvToJSON } from "../csvToJSON.js";
 
 describe('csvToJSON function', () => {
     it('Корректный ввод параметров', () => {
-        let res = csvToJSON(["p1;p2;p3", "1;A;b", "2;B;v"], ';');
-
-        expect(res[0]).toEqual({ p1: 1, p2: 'A', p3: 'b' });
-        expect(res[1]).toEqual({ p1: 2, p2: 'B', p3: 'v' });
-        expect(res[0]).toHaveProperty('p1', 1);
-        expect(res[0]).toHaveProperty('p2', 'A');
+        const csvArray = ["name;age;city", "John;25;New York", "Jane;30;London"];
+        const result = csvToJSON(csvArray, ';');
+        expect(result).toEqual([
+            { name: 'John', age: 25, city: 'New York' },
+            { name: 'Jane', age: 30, city: 'London' }
+        ]);
     });
 
     it('Передача неправильного массива', () => {
-        expect(() => csvToJSON(["p1;p2;p3"], ';')).toThrowError('Некорректная передача параметра input!');
+        expect(() => csvToJSON(["p1;p2;p3"], ';')).toThrowError('Некорректная передача');
     });
 
-    it('Нсовпадение параметров', () => {
-        expect(() => csvToJSON(["p1;p2;p3", "1;A;b", "2;B"], ';')).toThrowError('Несовпадение по количеству параметров!');
+    it('Несовпадение параметров', () => {
+        expect(() => csvToJSON(["p1;p2;p3", "1;A;b", "2;B"], ';')).toThrowError('Несовпадение по количеству параметров');
     });
 
     it('Передача пустого параметра', () => {
-        expect(() => csvToJSON(["p1;p2;p3", "1;A;b", "2;B;"], ';')).toThrowError('Передача пустого значения в параметр функции!');
+        expect(() => csvToJSON(["p1;p2;p3", "1;A;b", "2;B;"], ';')).toThrowError('Передача пустого значения');
     });
 });

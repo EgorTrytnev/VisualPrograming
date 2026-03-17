@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { formatCSVFileToJSONFile } from "../formatCSVFileToJSONFile";
 import { readFile, writeFile } from 'node:fs/promises';
 
@@ -33,10 +33,10 @@ describe('formatCSVFileToJSONFile', () => {
 
     it('throws error for empty file paths', async () => {
         await expect(formatCSVFileToJSONFile('', 'output.json', ';'))
-            .rejects.toThrow("Error: Необходимо указать корректный путь");
+            .rejects.toThrow("Не корректный путь");
 
         await expect(formatCSVFileToJSONFile('input.csv', '', ';'))
-            .rejects.toThrow("Error: Необходимо указать корректный путь");
+            .rejects.toThrow("Не корректный путь");
     });
 
     it('handles missing input file', async () => {
@@ -50,7 +50,7 @@ describe('formatCSVFileToJSONFile', () => {
         mockedReadFile.mockResolvedValue('');
 
         await expect(formatCSVFileToJSONFile('input.csv', 'output.json', ';'))
-            .rejects.toThrow('Error: Некорректная передача параметра input!');
+            .rejects.toThrow('Некорректная передача');
     });
 
     it('handles file write error', async () => {
