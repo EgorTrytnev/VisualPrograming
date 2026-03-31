@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+#root {
+  padding: 16px;
+}
+
+.page {
+  max-width: 700px;
+}
+
+.form,
+.controls,
+.task-list {
+  margin-bottom: 16px;
+}
+
+.form div,
+.controls div,
+.task-item {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.task-list {
+  padding-left: 20px;
+}
+
+.task-title {
+  padding: 0;
+}
+
+.task-actions button {
+  margin-right: 8px;
+}
+
+.filters button {
+  margin-right: 8px;
+}

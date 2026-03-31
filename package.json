@@ -1,33 +1,34 @@
 {
-  "name": "lab_1",
+  "name": "todo-list-react-ts",
   "version": "1.0.0",
+  "private": true,
   "description": "",
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "tsx src/index.ts",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage",
-    "lint": "tsc --noEmit",
-    "clean": "rm -rf dist"
+  "homepage": "https://github.com/EgorTrytnev/VisualPrograming#readme",
+  "bugs": {
+    "url": "https://github.com/EgorTrytnev/VisualPrograming/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/EgorTrytnev/visualproga.git"
+    "url": "git+https://github.com/EgorTrytnev/VisualPrograming.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/EgorTrytnev/visualproga/issues"
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
   },
-  "homepage": "https://gitlab.com/EgorTrytnev/visualproga#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
   "devDependencies": {
-    "@types/node": "^25.4.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
   }
 }
