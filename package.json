@@ -16,9 +16,10 @@
   "main": "Conv.ts",
   "scripts": {
     "dev": "tsx src/Conv.ts",
-    "test": "vitest",
-    "test:watch": "vitest --watch",
-    "coverage": "vitest run --coverage"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "assertion-error": "^2.0.1",
