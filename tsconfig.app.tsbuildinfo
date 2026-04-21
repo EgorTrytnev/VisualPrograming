@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/types.ts","./src/api/weatherApi.test.ts","./src/api/weatherApi.ts","./src/components/AirQualityCard.tsx","./src/components/CitySearch.tsx","./src/components/CurrentWeatherCard.tsx","./src/components/ForecastList.tsx","./src/utils/weatherUtils.test.ts","./src/utils/weatherUtils.ts"],"version":"5.9.3"}
