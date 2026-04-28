@@ -1,0 +1,38 @@
+.book-card {
+  width: 200px;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  background: #ffffff;
+}
+
+.book-card__cover,
+.book-card__placeholder {
+  width: 100%;
+  height: 280px;
+  margin-bottom: 12px;
+}
+
+.book-card__cover {
+  object-fit: cover;
+}
+
+.book-card__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f3f3;
+  color: #666666;
+  border: 1px solid #dddddd;
+}
+
+.book-card__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.book-card__authors {
+  margin: 8px 0 0;
+  font-size: 16px;
+  color: #555555;
+}

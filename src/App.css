@@ -1,0 +1,30 @@
+.app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.app__intro h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
+}
+
+.app__intro p {
+  margin: 0 0 24px;
+  font-size: 16px;
+}
+
+.app__status {
+  margin: 16px 0;
+  font-size: 16px;
+}
+
+.app__status_error {
+  color: #cc0000;
+}
+
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
